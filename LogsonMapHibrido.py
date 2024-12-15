@@ -3,21 +3,25 @@ from pydantic import BaseModel
 import nmap
 import mysql.connector
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
 
 # Configuración de la base de datos
 DB_CONFIG = {
-    'user': 'user_raspi',
-    'password': 'ciberscan2024*',
-    'host': '10.11.0.17',
+    'user': 'root',
+    'password': '',
+    'host': 'localhost',
     'database': 'db_logson'
 }
-
 app = FastAPI()
-
-
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permitir todos los orígenes
+    allow_credentials=True,  # Permitir envío de credenciales
+    allow_methods=["*"],  # Permitir todos los métodos HTTP (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos los encabezados
+)
 class ScanRequest(BaseModel):
     target_ip: str
     scan_name: str
