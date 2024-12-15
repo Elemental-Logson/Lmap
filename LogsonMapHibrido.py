@@ -1,19 +1,22 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import nmap
-import json
 import mysql.connector
 from typing import Optional
 
+import uvicorn
+
 # Configuración de la base de datos
 DB_CONFIG = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
+    'user': 'user_raspi',
+    'password': 'ciberscan2024*',
+    'host': '10.11.0.17',
     'database': 'db_logson'
 }
 
 app = FastAPI()
+
+
 
 class ScanRequest(BaseModel):
     target_ip: str
@@ -213,3 +216,12 @@ async def scan_vulnerabilities_api(request: ScanRequest):
         return {"status": "success", "scan_results": scan_results}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "LogsonMapHibrido:app",  # Nombre de tu archivo FastAPI
+        host="0.0.0.0",          # Dirección del host
+        port=8001,               # Puerto
+        log_level="info",        # Nivel de logs
+        reload=True,             # Recarga automática en desarrollo
+    )
