@@ -9,9 +9,9 @@ import uvicorn
 
 # Configuración de la base de datos
 DB_CONFIG = {
-    'user': 'root',
-    'password': '',
-    'host': 'localhost',
+    'user': 'user_raspi',
+    'password': 'ciberscan2024*',
+    'host': '10.11.0.17',
     'database': 'db_logson'
 }
 app = FastAPI()
